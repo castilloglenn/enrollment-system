@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<courses>
+	<course>
+		<name>Bachelor of Science in Business Management</name>
+		<acronym>BSBM</acronym>
+		<subjects>
+			<subject>
+				<code>BM001</code>
+				<name>Human Resource Development Management</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>BM002</code>
+				<name>Marketing Management</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>BM003</code>
+				<name>Financial Management</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>BM004</code>
+				<name>Operations Management</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>BM005</code>
+				<name>Economics</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>BM006</code>
+				<name>Humanities and Arts</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>BM007</code>
+				<name>Business Law</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>BM008</code>
+				<name>Mathematics for Business and Economics</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>BM009</code>
+				<name>Business Statistics</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>BM010</code>
+				<name>Investment Theory </name>
+				<units>3</units>
+			</subject>
+		</subjects>
+	</course>
+	<course>
+		<name>Bachelor of Science in Computer Science</name>
+		<acronym>BSCS</acronym>
+		<subjects>
+			<subject>
+				<code>CS001</code>
+				<name>Data Structures</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>CS002</code>
+				<name>Database Management</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>CS003</code>
+				<name>Statistics and Probability</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>CS004</code>
+				<name>Calculus</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>CS005</code>
+				<name>Advance Algebra</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>CS006</code>
+				<name>Analysis and Design of Algorithms</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>CS007</code>
+				<name>Computer Elective</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>CS008</code>
+				<name>Software Engineering</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>CS009</code>
+				<name>Speech Communication</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>CS010</code>
+				<name>Operating Systems</name>
+				<units>3</units>
+			</subject>
+		</subjects>
+	</course>
+	<course>
+		<name>Bachelor of Science in Hospitality Management</name>
+		<acronym>BSHM</acronym>
+		<subjects>
+			<subject>
+				<code>HM001</code>
+				<name>Marketing Principles</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>HM002</code>
+				<name>Knife Skills</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>HM003</code>
+				<name>Entrepreneurship</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>HM004</code>
+				<name>Management Principles</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>HM005</code>
+				<name>Tourism Planning and Management</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>HM006</code>
+				<name>Entrepreneurship and Business Planning</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>HM007</code>
+				<name>Business Communication</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>HM008</code>
+				<name>Human Behavior in Organization</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>HM009</code>
+				<name>Basic Finance</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>HM010</code>
+				<name>Basic Accounting</name>
+				<units>2</units>
+			</subject>
+		</subjects>
+	</course>
+	<course>
+		<name>Bachelor of Science in Information and Technology</name>
+		<acronym>BSIT</acronym>
+		<subjects>
+			<subject>
+				<code>IT001</code>
+				<name>Introduction to Cutting Classes</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>IT002</code>
+				<name>Computer Programming </name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>IT003</code>
+				<name>Web Development</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>IT004</code>
+				<name>Integrated Programming</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>IT005</code>
+				<name>Open Source Technology </name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>IT006</code>
+				<name>Productivity and Quality in Information Technology</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>IT007</code>
+				<name>Program and Logic Formulation</name>
+				<units>3</units>
+			</subject>
+			<subject>
+				<code>IT008</code>
+				<name>Keyboarding and Word Processing</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>IT009</code>
+				<name>Discrete and Logic Mathematics</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>IT010</code>
+				<name>Object-Oriented Programming Language</name>
+				<units>3</units>
+			</subject>
+		</subjects>
+	</course>
+	<course>
+		<subjects>
+			<subject>
+				<code>GNED01</code>
+				<name>Art Appreciation</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>GNED02</code>
+				<name>Gender and Society</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>GNED03</code>
+				<name>Ethics</name>
+				<units>1</units>
+			</subject>
+			<subject>
+				<code>GNED04</code>
+				<name>Araling Panlipunan</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>GNED05</code>
+				<name>Kasaysayan ng Pilipinas</name>
+				<units>1</units>
+			</subject>
+			<subject>
+				<code>GNED06</code>
+				<name>Filipino Christian Living</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>GNED07</code>
+				<name>Values and Education</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>GNED08</code>
+				<name>Oral Communication</name>
+				<units>1</units>
+			</subject>
+			<subject>
+				<code>GNED09</code>
+				<name>Practical Reading and writing</name>
+				<units>2</units>
+			</subject>
+			<subject>
+				<code>GNED10</code>
+				<name>Physical Education and Health</name>
+				<units>2</units>
+			</subject>
+		</subjects>
+	</course>
+</courses>

@@ -1,0 +1,54 @@
+BSBM (A, B, C, D)
+
+BM001	Human Resource Development Management	3
+BM002	Marketing Management			3
+BM003	Financial Management			3
+BM004	Operations Management			3
+BM005	Economics				3
+BM006	Humanities and Arts 			2
+BM007	Business Law				3
+BM008	Mathematics for Business & Economics	3
+BM009	Business Statistics			3
+BM010	Investment Theory 			3
+
+BSCS (A, B, C, D)
+
+CS001	Data Structures				3
+CS002	Database Management			3
+CS003	Statistics and Probability		3
+CS004	Calculus				2
+CS005	Advance Algebra				2
+CS006	Analysis and Design of Algorithms	3
+CS007	Computer Elective			3
+CS008	Software Engineering			2
+CS009	Speech Communication			2
+CS010	Operating Systems			3
+
+BSHM (A, B, C, D)
+
+HM001	Marketing Principles			3
+HM002	Knife Skills				3
+HM003	Entrepreneurship			2
+HM004	Management Principles			2
+HM005	Tourism Planning and Management		3
+HM006	Entrepreneurship and Business Planning	3
+HM007	Business Communication			3
+HM008	Human Behavior in Organization		3
+HM009	Basic Finance				2
+HM010	Basic Accounting			2
+
+BSIT (A, B, C, D)
+
+IT001	Introduction to Cutting Classes		3
+IT002	Computer Programming 			3
+IT003	Web Development				3
+IT004	Integrated Programming			3
+IT005	Open Source Technology 			3
+IT006	Productivity and Quality in Information Technology	3
+IT007	Program and Logic Formulation		3
+IT008	Keyboarding and Word Processing		2
+IT009	Discrete and Logic Mathematics		2
+IT010	Object-Oriented Programming Language	3
+
+
+
