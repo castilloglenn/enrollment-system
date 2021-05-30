@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
@@ -124,8 +125,8 @@ public class Database {
 				  "INSERT INTO course "
 				+ "VALUES (?, ?);"
 			);
-			ps.setString(1, data[1].toString());
-			ps.setString(2, data[0].toString());
+			ps.setString(1, data[1]);
+			ps.setString(2, data[0]);
 			
 			ps.executeUpdate();
 			courses.add(data[1].toString());
@@ -140,9 +141,60 @@ public class Database {
 				  "INSERT INTO subject "
 				+ "VALUES (?, ?, ?);"
 			);
+			ps.setString(1, data[0]);
+			ps.setString(2, data[1]);
+			ps.setString(3, data[2]);
+			
+			ps.executeUpdate();
+			subjects.add(data[0].toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertSection(String[] data) {
+		try {
+			ps = con.prepareStatement(
+				  "INSERT INTO section "
+				+ "VALUES (?, ?, ?);"
+			);
+			ps.setString(1, data[0].toString());
+			ps.setString(2, data[1].toString());
+			ps.setInt(3, Integer.parseInt(data[2]));
+			
+			ps.executeUpdate();
+			subjects.add(data[0].toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertSchedule(String[] data) {
+		try {
+			ps = con.prepareStatement(
+				  "INSERT INTO assigns "
+				+ "VALUES (?, ?, ?, ?);"
+			);
 			ps.setString(1, data[0].toString());
 			ps.setString(2, data[1].toString());
 			ps.setString(3, data[2].toString());
+			ps.setString(4, data[3].toString());
+			
+			ps.executeUpdate();
+			subjects.add(data[0].toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertContain(String[] data) {
+		try {
+			ps = con.prepareStatement(
+				  "INSERT INTO contains "
+				+ "VALUES (?, ?);"
+			);
+			ps.setString(1, data[0].toString());
+			ps.setString(2, data[1].toString());
 			
 			ps.executeUpdate();
 			subjects.add(data[0].toString());
@@ -216,5 +268,43 @@ public class Database {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+	
+	public Object[] fetchCourseIDs() {
+		try {
+			ps = con.prepareStatement(
+				"SELECT course_id "
+				+ "FROM course"
+			);
+			ResultSet courses = ps.executeQuery();
+			ArrayList<String> coursesList = new ArrayList<>();
+			while (courses.next()) {
+				coursesList.add(courses.getString(1));
+			}
+			return coursesList.toArray();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Object[] fetchSubjectIDs(String course) {
+		try {
+			ps = con.prepareStatement(
+				"SELECT subject_id "
+				+ "FROM subject "
+				+ "WHERE subject_id "
+				+ "LIKE '%" + course + "%'"
+			);
+			ResultSet subjects = ps.executeQuery();
+			ArrayList<String> subjectList = new ArrayList<>();
+			while (subjects.next()) {
+				subjectList.add(subjects.getString(1));
+			}
+			return subjectList.toArray();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

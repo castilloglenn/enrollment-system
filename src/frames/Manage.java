@@ -33,12 +33,15 @@ public class Manage extends JInternalFrame {
 	private JPanel formsPanel, tabbedPane;
 	private JTextField txtFormContactNumber, txtFormEmailAddress, txtFormGuardianName;
 	private JTextField txtFormStudentNumber;
-	private JLabel lblPersonalInformation, lblLastName, lblGender, lblCivilStatus, lblContactNumber, lblEmailAddress, lblGuardianInformation, lblGuardianName;
+	private JLabel lblPersonalInformation, lblLastName, lblGender, lblCivilStatus, 
+		lblContactNumber, lblEmailAddress, lblGuardianInformation, lblGuardianName;
 	private JLabel lblGeneralInformation, lblCourse, lblFormYearLevel, lblSection;
 	private JLabel lblFormStudentNumber;
 	private JComboBox<String> comboFormGender, comboCourse, comboSection;
 	private JComboBox<String> comboYearLevel;
-	private JComboBox<String> comboBox_1;
+	private JComboBox<String> comboCivilStatus;
+	private JComboBox<String> comboOperations;
+	private JSpinner spinnerBirthday;
 	private JButton btnFormAdd;
 	private JTextField txtLastName;
 	private JTextField txtFirstName;
@@ -59,7 +62,6 @@ public class Manage extends JInternalFrame {
 		tabbedPane.setBounds(0, 0, 933, 528);
 		
 		getContentPane().add(tabbedPane);
-		
 		
 		formsPanel = new JPanel();
 		formsPanel.setBackground(new Color(54, 134, 0));
@@ -198,11 +200,11 @@ public class Manage extends JInternalFrame {
 		comboYearLevel.setBounds(543, 347, 174, 29);
 		formsPanel.add(comboYearLevel);
 		
-		comboBox_1 = new JComboBox<>();
-		comboBox_1.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 16));
-		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {"Single", "Married", "Widow"}));
-		comboBox_1.setBounds(524, 91, 193, 29);
-		formsPanel.add(comboBox_1);
+		comboCivilStatus = new JComboBox<>();
+		comboCivilStatus.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 16));
+		comboCivilStatus.setModel(new DefaultComboBoxModel<String>(new String[] {"Single", "Married", "Widow"}));
+		comboCivilStatus.setBounds(524, 91, 193, 29);
+		formsPanel.add(comboCivilStatus);
 		
 		txtLastName = new JTextField();
 		txtLastName.setFont(new Font("Microsoft YaHei UI Light", Font.BOLD, 16));
@@ -245,8 +247,8 @@ public class Manage extends JInternalFrame {
 		lblSelectOperation.setFont(new Font("Arial", Font.BOLD, 13));
 		lblSelectOperation.setBounds(740, 48, 117, 32);
 		formsPanel.add(lblSelectOperation);
-		
-		JComboBox<String> comboOperations = new JComboBox<>();
+
+		comboOperations = new JComboBox<>();
 		comboOperations.setModel(new DefaultComboBoxModel<String>(new String[] {"Enroll", "Update", "Remove"}));
 		comboOperations.setFont(new Font("Microsoft YaHei UI", Font.BOLD, 16));
 		comboOperations.setBounds(739, 91, 173, 32);
@@ -266,15 +268,30 @@ public class Manage extends JInternalFrame {
 		lblBirthday.setBounds(10, 177, 134, 32);
 		formsPanel.add(lblBirthday);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerDateModel(new Date(946656000000L), new Date(-2196835200000L), new Date(1621612800000L), Calendar.DAY_OF_YEAR));
-		spinner.setBounds(149, 177, 246, 32);
-		formsPanel.add(spinner);
+		spinnerBirthday = new JSpinner();
+		spinnerBirthday.setModel(new SpinnerDateModel(new Date(946656000000L), new Date(-2196835200000L), new Date(1621612800000L), Calendar.DAY_OF_YEAR));
+		spinnerBirthday.setBounds(149, 177, 246, 32);
+		formsPanel.add(spinnerBirthday);
 
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
 				dispose();
+			}
+		});
+		comboOperations.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selected = comboOperations.getSelectedIndex();
+				if (selected == 0) {
+					// enroll
+					
+				} else if (selected == 1) {
+					// update
+					
+				} else if (selected == 2) {
+					// remove
+					
+				}
 			}
 		});
 		btnFormAdd.addActionListener(new ActionListener() {

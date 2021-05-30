@@ -18,6 +18,7 @@ public class Login extends JFrame {
 	private JPasswordField txtPassword;
 	
 	private String[] sampleLogin = {"admin", "admin"};
+	private Main main;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -30,6 +31,8 @@ public class Login extends JFrame {
 
 	
 	public Login() {
+		main = new Main();
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images\\logo.png"));
 		setTitle(Main.SYSTEM_NAME + " | Login");
 		setBounds(100, 100, 884, 377);
@@ -130,7 +133,6 @@ public class Login extends JFrame {
 				String pass = new String(txtPassword.getPassword());
 				
 				if (user.equals(sampleLogin[0]) && pass.equals(sampleLogin[1])) {
-					Main main = new Main();
 					main.setVisible(true);
 					dispose();
 				} else {
