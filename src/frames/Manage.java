@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +28,8 @@ import javax.swing.event.InternalFrameEvent;
 
 import util.Database;
 import util.Utility;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 @SuppressWarnings("serial")
 public class Manage extends JInternalFrame {
@@ -72,31 +76,31 @@ public class Manage extends JInternalFrame {
 		lblPersonalInformation = new JLabel("Personal Information:\r\n");
 		lblPersonalInformation.setBounds(10, 11, 169, 32);
 		lblPersonalInformation.setForeground(Color.BLACK);
-		lblPersonalInformation.setFont(new Font("Arial", Font.BOLD, 17));
+		lblPersonalInformation.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblPersonalInformation);
 		
 		lblLastName = new JLabel("Full Name (Last, First, MI)");
 		lblLastName.setBounds(10, 48, 214, 32);
 		lblLastName.setForeground(Color.WHITE);
-		lblLastName.setFont(new Font("Arial", Font.BOLD, 17));
+		lblLastName.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblLastName);
 		
 		lblGender = new JLabel("Gender");
 		lblGender.setBounds(41, 91, 58, 32);
 		lblGender.setForeground(Color.WHITE);
-		lblGender.setFont(new Font("Arial", Font.BOLD, 17));
+		lblGender.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblGender);
 		
 		lblCivilStatus = new JLabel("Civil Status");
 		lblCivilStatus.setBounds(425, 91, 89, 32);
 		lblCivilStatus.setForeground(Color.WHITE);
-		lblCivilStatus.setFont(new Font("Arial", Font.BOLD, 17));
+		lblCivilStatus.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblCivilStatus);
 		
 		lblContactNumber = new JLabel("Contact Number");
 		lblContactNumber.setBounds(10, 134, 134, 32);
 		lblContactNumber.setForeground(Color.WHITE);
-		lblContactNumber.setFont(new Font("Arial", Font.BOLD, 17));
+		lblContactNumber.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblContactNumber);
 		
 		txtFormContactNumber = new JTextField();
@@ -108,7 +112,7 @@ public class Manage extends JInternalFrame {
 		lblEmailAddress = new JLabel("Email Address");
 		lblEmailAddress.setBounds(405, 134, 117, 32);
 		lblEmailAddress.setForeground(Color.WHITE);
-		lblEmailAddress.setFont(new Font("Arial", Font.BOLD, 17));
+		lblEmailAddress.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblEmailAddress);
 		
 		txtFormEmailAddress = new JTextField();
@@ -126,13 +130,13 @@ public class Manage extends JInternalFrame {
 		lblGuardianInformation = new JLabel("Guardian Information:");
 		lblGuardianInformation.setBounds(10, 227, 176, 32);
 		lblGuardianInformation.setForeground(Color.BLACK);
-		lblGuardianInformation.setFont(new Font("Arial", Font.BOLD, 17));
+		lblGuardianInformation.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblGuardianInformation);
 		
 		lblGuardianName = new JLabel("Guardian Name");
 		lblGuardianName.setBounds(10, 270, 124, 32);
 		lblGuardianName.setForeground(Color.WHITE);
-		lblGuardianName.setFont(new Font("Arial", Font.BOLD, 17));
+		lblGuardianName.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblGuardianName);
 		
 		txtFormGuardianName = new JTextField();
@@ -144,25 +148,25 @@ public class Manage extends JInternalFrame {
 		lblGeneralInformation = new JLabel("General Information:");
 		lblGeneralInformation.setBounds(10, 313, 176, 32);
 		lblGeneralInformation.setForeground(Color.BLACK);
-		lblGeneralInformation.setFont(new Font("Arial", Font.BOLD, 17));
+		lblGeneralInformation.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblGeneralInformation);
 		
 		lblCourse = new JLabel("Course");
 		lblCourse.setBounds(69, 385, 63, 32);
 		lblCourse.setForeground(Color.WHITE);
-		lblCourse.setFont(new Font("Arial", Font.BOLD, 17));
+		lblCourse.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblCourse);
 		
 		lblFormYearLevel = new JLabel("Year Level");
 		lblFormYearLevel.setBounds(454, 347, 89, 32);
 		lblFormYearLevel.setForeground(Color.WHITE);
-		lblFormYearLevel.setFont(new Font("Arial", Font.BOLD, 17));
+		lblFormYearLevel.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblFormYearLevel);
 		
 		lblSection = new JLabel("Section");
 		lblSection.setBounds(462, 385, 63, 32);
 		lblSection.setForeground(Color.WHITE);
-		lblSection.setFont(new Font("Arial", Font.BOLD, 17));
+		lblSection.setFont(new Font("Arial", Font.BOLD, 16));
 		formsPanel.add(lblSection);
 		
 		comboCourse = new JComboBox<>();
@@ -173,7 +177,7 @@ public class Manage extends JInternalFrame {
 		
 		lblFormStudentNumber = new JLabel("Student Number");
 		lblFormStudentNumber.setForeground(Color.WHITE);
-		lblFormStudentNumber.setFont(new Font("Arial", Font.BOLD, 17));
+		lblFormStudentNumber.setFont(new Font("Arial", Font.BOLD, 16));
 		lblFormStudentNumber.setBounds(10, 347, 134, 32);
 		formsPanel.add(lblFormStudentNumber);
 		
@@ -186,7 +190,7 @@ public class Manage extends JInternalFrame {
 		
 		btnFormAdd = new JButton("Confirm");
 		btnFormAdd.setFocusable(false);
-		btnFormAdd.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnFormAdd.setFont(new Font("Arial", Font.PLAIN, 16));
 		btnFormAdd.setBounds(739, 134, 173, 33);
 		formsPanel.add(btnFormAdd);
 		
@@ -211,19 +215,19 @@ public class Manage extends JInternalFrame {
 		txtLastName = new JTextField();
 		txtLastName.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtLastName.setColumns(10);
-		txtLastName.setBounds(219, 48, 175, 32);
+		txtLastName.setBounds(219, 48, 200, 32);
 		formsPanel.add(txtLastName);
 		
 		txtFirstName = new JTextField();
 		txtFirstName.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtFirstName.setColumns(10);
-		txtFirstName.setBounds(405, 48, 226, 32);
+		txtFirstName.setBounds(423, 48, 208, 32);
 		formsPanel.add(txtFirstName);
 		
 		txtMi = new JTextField();
 		txtMi.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtMi.setColumns(10);
-		txtMi.setBounds(641, 48, 75, 32);
+		txtMi.setBounds(635, 48, 82, 32);
 		formsPanel.add(txtMi);
 		
 		textFormCourseName = new JTextField(dtb.fetchCourseName(comboCourse.getSelectedItem().toString()));
@@ -235,7 +239,7 @@ public class Manage extends JInternalFrame {
 		
 		JLabel lblCourseName = new JLabel("Course Name");
 		lblCourseName.setForeground(Color.WHITE);
-		lblCourseName.setFont(new Font("Arial", Font.BOLD, 17));
+		lblCourseName.setFont(new Font("Arial", Font.BOLD, 16));
 		lblCourseName.setBounds(28, 428, 106, 32);
 		formsPanel.add(lblCourseName);
 		
@@ -246,8 +250,8 @@ public class Manage extends JInternalFrame {
 		
 		lblSelectOperation = new JLabel("Select Operation:");
 		lblSelectOperation.setForeground(Color.WHITE);
-		lblSelectOperation.setFont(new Font("Arial", Font.BOLD, 13));
-		lblSelectOperation.setBounds(740, 48, 117, 32);
+		lblSelectOperation.setFont(new Font("Arial", Font.BOLD, 16));
+		lblSelectOperation.setBounds(740, 48, 172, 32);
 		formsPanel.add(lblSelectOperation);
 
 		comboOperations = new JComboBox<>();
@@ -258,6 +262,7 @@ public class Manage extends JInternalFrame {
 		formsPanel.add(comboOperations);
 		
 		lblStudentImage = new JLabel("");
+		lblStudentImage.setFont(new Font("Arial", Font.BOLD, 16));
 		lblStudentImage.setBounds(739, 191, 173, 269);
 		Image studentIcon = new ImageIcon("images\\studentIcon.png").getImage().getScaledInstance(lblStudentImage.getWidth(), lblStudentImage.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon studentIconScaled = new ImageIcon(studentIcon);
@@ -267,7 +272,7 @@ public class Manage extends JInternalFrame {
 		lblBirthday = new JLabel("Birthday");
 		lblBirthday.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBirthday.setForeground(Color.WHITE);
-		lblBirthday.setFont(new Font("Arial", Font.BOLD, 17));
+		lblBirthday.setFont(new Font("Arial", Font.BOLD, 16));
 		lblBirthday.setBounds(10, 177, 134, 32);
 		formsPanel.add(lblBirthday);
 		
@@ -275,6 +280,8 @@ public class Manage extends JInternalFrame {
 		spinnerBirthday.setFont(new Font("Arial", Font.PLAIN, 16));
 		spinnerBirthday.setModel(new SpinnerDateModel(new Date(946656000000L), new Date(-2196835200000L), new Date(1621612800000L), Calendar.DAY_OF_YEAR));
 		spinnerBirthday.setBounds(157, 177, 238, 32);
+		SimpleDateFormat model = new SimpleDateFormat("MM/dd/yyyy");
+		spinnerBirthday.setEditor(new JSpinner.DateEditor(spinnerBirthday, model.toPattern()));
 		formsPanel.add(spinnerBirthday);
 
 		addInternalFrameListener(new InternalFrameAdapter() {
@@ -288,13 +295,52 @@ public class Manage extends JInternalFrame {
 				int selected = comboOperations.getSelectedIndex();
 				if (selected == 0) {
 					// enroll
-					
+					txtFormStudentNumber.setText(Long.toString(util.generateStudentID()));
+					txtFormStudentNumber.setEditable(false);
+					txtLastName.setEditable(true);
+					txtFirstName.setEditable(true);
+					txtMi.setEditable(true);
+					txtFormContactNumber.setEditable(true);
+					txtFormEmailAddress.setEditable(true);
+					txtFormGuardianName.setEditable(true);
+					spinnerBirthday.setEnabled(true);
+					comboCivilStatus.setEnabled(true);
+					comboFormGender.setEnabled(true);
+					comboYearLevel.setEnabled(true);
+					comboCourse.setEnabled(true);
+					comboSection.setEnabled(true);
 				} else if (selected == 1) {
 					// update
-					
+					txtFormStudentNumber.setText("");
+					txtFormStudentNumber.setEditable(true);
+					txtLastName.setEditable(false);
+					txtFirstName.setEditable(false);
+					txtMi.setEditable(false);
+					txtFormContactNumber.setEditable(false);
+					txtFormEmailAddress.setEditable(false);
+					txtFormGuardianName.setEditable(false);
+					spinnerBirthday.setEnabled(false);
+					comboCivilStatus.setEnabled(false);
+					comboFormGender.setEnabled(false);
+					comboYearLevel.setEnabled(false);
+					comboCourse.setEnabled(false);
+					comboSection.setEnabled(false);
 				} else if (selected == 2) {
 					// remove
-					
+					txtFormStudentNumber.setText("");
+					txtFormStudentNumber.setEditable(true);
+					txtLastName.setEditable(false);
+					txtFirstName.setEditable(false);
+					txtMi.setEditable(false);
+					txtFormContactNumber.setEditable(false);
+					txtFormEmailAddress.setEditable(false);
+					txtFormGuardianName.setEditable(false);
+					spinnerBirthday.setEnabled(false);
+					comboCivilStatus.setEnabled(false);
+					comboFormGender.setEnabled(false);
+					comboYearLevel.setEnabled(false);
+					comboCourse.setEnabled(false);
+					comboSection.setEnabled(false);
 				}
 			}
 		});
@@ -307,6 +353,11 @@ public class Manage extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				String courseID = comboCourse.getSelectedItem().toString();
 				textFormCourseName.setText(dtb.fetchCourseName(courseID));
+			}
+		});
+		spinnerBirthday.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				System.out.println(spinnerBirthday.getValue().toString());
 			}
 		});
 	}

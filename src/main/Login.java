@@ -33,6 +33,10 @@ public class Login extends JFrame {
 	public Login() {
 		main = new Main();
 		
+		UIManager.put("OptionPane.background", new Color(10, 163, 35));
+		UIManager.put("OptionPane.messageForeground", new Color(255, 255, 255));
+		UIManager.put("Panel.background", new Color(10, 163, 35));
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images\\logo.png"));
 		setTitle(Main.SYSTEM_NAME + " | Login");
 		setBounds(100, 100, 884, 377);
