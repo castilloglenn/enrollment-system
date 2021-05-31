@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
@@ -35,7 +34,6 @@ public class Database {
 			stmt = con.createStatement();
 			createDatabase();
 			createTables();
-			dataExistenceCheck();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(
@@ -57,64 +55,64 @@ public class Database {
 	public void createTables() throws SQLException {
 		stmt.execute(
 			"CREATE TABLE IF NOT EXISTS subject ("
-					+ "subject_id VARCHAR(255) PRIMARY KEY,"
-					+ "name VARCHAR(255) NOT NULL,"
-					+ "units INT NOT NULL"
+				+ "subject_id VARCHAR(255) PRIMARY KEY,"
+				+ "name VARCHAR(255) NOT NULL,"
+				+ "units INT NOT NULL"
 			+ ");"
 		);
 		stmt.execute(
 			"CREATE TABLE IF NOT EXISTS section ("
-					+ "section_id VARCHAR(255) PRIMARY KEY,"
-					+ "name VARCHAR(255) NOT NULL,"
-					+ "year_level INT NOT NULL"
+				+ "section_id VARCHAR(255) PRIMARY KEY,"
+				+ "name VARCHAR(255) NOT NULL,"
+				+ "year_level INT NOT NULL"
 			+ ");"
 		);
 		stmt.execute(
 			"CREATE TABLE IF NOT EXISTS course ("
-					+ "course_id VARCHAR(255) PRIMARY KEY,"
-					+ "name VARCHAR(255) NOT NULL"
+				+ "course_id VARCHAR(255) PRIMARY KEY,"
+				+ "name VARCHAR(255) NOT NULL"
 			+ ");"
 		);
 		stmt.execute(
 			"CREATE TABLE IF NOT EXISTS student ("
-					+ "student_id VARCHAR(255) PRIMARY KEY,"
-					+ "section_id VARCHAR(255) NOT NULL,"
-					+ "course_id VARCHAR(255) NOT NULL,"
-					+ "fname VARCHAR(255) NOT NULL,"
-					+ "mname VARCHAR(255) DEFAULT \"\","
-					+ "lname VARCHAR(255) NOT NULL,"
-					+ "birthday DATE NOT NULL,"
-					+ "gender VARCHAR(255) NOT NULL,"
-					+ "contact_number VARCHAR(255) NOT NULL,"
-					+ "civil_status VARCHAR(255) NOT NULL,"
-					+ "email VARCHAR(255) NOT NULL,"
-					+ "guardian VARCHAR(255) NOT NULL,"
-					+ "FOREIGN KEY (section_id) "
-					+ "REFERENCES section(section_id),"
-					+ "FOREIGN KEY (course_id) "
-					+ "REFERENCES course(course_id)"
+				+ "student_id BIGINT PRIMARY KEY,"
+				+ "section_id VARCHAR(255) NOT NULL,"
+				+ "course_id VARCHAR(255) NOT NULL,"
+				+ "fname VARCHAR(255) NOT NULL,"
+				+ "mname VARCHAR(255) DEFAULT \"\","
+				+ "lname VARCHAR(255) NOT NULL,"
+				+ "birthday DATE NOT NULL,"
+				+ "gender VARCHAR(255) NOT NULL,"
+				+ "contact_number VARCHAR(255) NOT NULL,"
+				+ "civil_status VARCHAR(255) NOT NULL,"
+				+ "email VARCHAR(255) NOT NULL,"
+				+ "guardian VARCHAR(255) NOT NULL,"
+				+ "FOREIGN KEY (section_id) "
+				+ "REFERENCES section(section_id),"
+				+ "FOREIGN KEY (course_id) "
+				+ "REFERENCES course(course_id)"
 			+ ");"
 		);
 		stmt.execute(
 			"CREATE TABLE IF NOT EXISTS contains ("
-					+ "course_id VARCHAR(255) NOT NULL, "
-					+ "subject_id VARCHAR(255) NOT NULL, "
-					+ "FOREIGN KEY (course_id)"
-					+ "REFERENCES course(course_id),"
-					+ "FOREIGN KEY (subject_id)"
-					+ "REFERENCES subject(subject_id)"
+				+ "course_id VARCHAR(255) NOT NULL, "
+				+ "subject_id VARCHAR(255) NOT NULL, "
+				+ "FOREIGN KEY (course_id)"
+				+ "REFERENCES course(course_id),"
+				+ "FOREIGN KEY (subject_id)"
+				+ "REFERENCES subject(subject_id)"
 			+ ");"
 		);
 		stmt.execute(
 			"CREATE TABLE IF NOT EXISTS assigns ("
-					+ "section_id VARCHAR(255) NOT NULL, "
-					+ "subject_id VARCHAR(255) NOT NULL, "
-					+ "time VARCHAR(255) NOT NULL, "
-					+ "day VARCHAR(255) NOT NULL, "
-					+ "FOREIGN KEY (section_id)"
-					+ "REFERENCES section(section_id), "
-					+ "FOREIGN KEY (subject_id)"
-					+ "REFERENCES subject(subject_id)"
+				+ "section_id VARCHAR(255) NOT NULL, "
+				+ "subject_id VARCHAR(255) NOT NULL, "
+				+ "time VARCHAR(255) NOT NULL, "
+				+ "day VARCHAR(255) NOT NULL, "
+				+ "FOREIGN KEY (section_id)"
+				+ "REFERENCES section(section_id), "
+				+ "FOREIGN KEY (subject_id)"
+				+ "REFERENCES subject(subject_id)"
 			+ ");"
 		);
 	}
@@ -302,6 +300,37 @@ public class Database {
 				subjectList.add(subjects.getString(1));
 			}
 			return subjectList.toArray();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public long fetchLastStudentID() {
+		try {
+			ResultSet pid = stmt.executeQuery(
+				"SELECT MAX(student_id) FROM student;"
+			);
+			pid.next();
+			if (pid.getLong(1) != 0) return pid.getLong(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public String fetchCourseName(String course_id) {
+		try {
+			ps = con.prepareStatement(
+				"SELECT name "
+				+ "FROM course "
+				+ "WHERE course_id='"
+				+ course_id
+				+ "';"
+			);
+			ResultSet courseName = ps.executeQuery();
+			courseName.next();
+			return courseName.getString(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

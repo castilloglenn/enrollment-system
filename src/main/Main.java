@@ -49,7 +49,7 @@ public class Main extends JFrame {
 		Sections sl = new Sections(util, dtb);
 		Courses cl = new Courses(util, dtb);
 		Dashboard db = new Dashboard(dtb);
-		Manage as = new Manage(dtb);
+		Manage as = new Manage(util, dtb);
 		Masterlist su = new Masterlist(dtb);
 		
 		setBounds(100, 100, 450, 300);

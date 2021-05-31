@@ -1,7 +1,7 @@
 package util;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Random;
 
 import javax.swing.JLabel;
@@ -23,9 +23,14 @@ public class Utility {
 	private String[] course = new String[2];
 	private String[] subject = new String[3];
 	private int courseIterator = 0, subjectIterator = 0;
-
-	String[] yearLevels = {"1", "2", "3", "4"};
-	String[] sections = {"A", "B", "C", "D"};
+	
+	private Random rand = new Random();
+	public String[] yearLevels = {"1", "2", "3", "4"};
+	public String[] sections = {"A", "B", "C", "D"};
+	private String[] schedules = {"8AM", "9AM", "10AM", "11AM", "12PM", 
+		"1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM"};
+	private String[] days = {"M", "T", "W", "TH", "F", "S"};
+	int maximumHours = 3;
 	
 	private Database dtb;
 	
@@ -75,29 +80,49 @@ public class Utility {
 	
 	private void generateData() {
 		Object[] courses = dtb.fetchCourseIDs();
-		String[] schedules = {"8AM", "9AM", "10AM", "11AM", "12PM", 
-			"1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM"};
-		String[] days = {"M", "T", "W", "TH", "F", "S"};
-		Random rand = new Random();
+		Object[] minorSubjects = dtb.fetchSubjectIDs("GNED");
 		
 		for (int courseIndex = 0; courseIndex < courses.length; courseIndex++) {
 			String course = courses[courseIndex].toString();
 			String code = course.substring(2);
 			Object[] subjects = dtb.fetchSubjectIDs(code);
 			
+			for (int subjectIndex = 0; subjectIndex < subjects.length; subjectIndex++) {
+				dtb.insertContain(new String[] {course, subjects[subjectIndex].toString()});
+			}
+			
 			for (int yearIndex = 0; yearIndex < yearLevels.length; yearIndex++) {
 				for (int sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
 					String section_id = courses[courseIndex].toString() + "-" + yearLevels[yearIndex] + sections[sectionIndex];
 					dtb.insertSection(new String[] {section_id, sections[sectionIndex], yearLevels[yearIndex]});
 					
-					for (int subjectIndex = 0; subjectIndex < subjects.length; subjectIndex++) {
-						dtb.insertContain(new String[] {course, subjects[subjectIndex].toString()});
-						
-						
-						dtb.insertSchedule(new String[] {section_id, subjects[subjectIndex].toString()});
+					if (yearIndex == 0) { // first year
+						randomizeSchedule(section_id, subjects, new int[] {0, 1});
+						randomizeSchedule(section_id, minorSubjects, new int[] {0, 1});
+					} else if (yearIndex == 1) { // second year
+						randomizeSchedule(section_id, subjects, new int[] {2, 3});
+						randomizeSchedule(section_id, minorSubjects, new int[] {2, 3});
+					} else if (yearIndex == 2) { // third year
+						randomizeSchedule(section_id, subjects, new int[] {4, 5, 6});
+						randomizeSchedule(section_id, minorSubjects, new int[] {4, 5, 6});
+					} else if (yearIndex == 3) { // fourth year
+						randomizeSchedule(section_id, subjects, new int[] {7, 8, 9});
+						randomizeSchedule(section_id, minorSubjects, new int[] {7, 8, 9});
 					}
 				}
 			}
+			
+		}
+	}
+	
+	public void randomizeSchedule(String section_id, Object[] subjects, int[] range) {
+		for (int index : range) {
+			int randomStartOfSchedule = rand.nextInt(schedules.length - maximumHours);
+			int randomHoursAllocated = rand.nextInt(maximumHours) + 1;
+			int randomDay = rand.nextInt(days.length);
+			String schedule = schedules[randomStartOfSchedule] + "-" + schedules[randomStartOfSchedule + randomHoursAllocated];
+			
+			dtb.insertSchedule(new String[] {section_id, subjects[index].toString(), schedule, days[randomDay]});
 		}
 	}
 	
@@ -118,5 +143,25 @@ public class Utility {
 		};
 	}
 	
-	
+	public long generateStudentID() {
+		long lastID = dtb.fetchLastStudentID();
+		StringBuilder markup = new StringBuilder();
+		
+		Calendar c = Calendar.getInstance();
+		markup.append(Integer.toString(c.get(Calendar.YEAR)));
+		
+		int month = c.get(Calendar.MONTH) + 1;
+		if (month < 10) markup.append("0");
+		markup.append(Integer.toString(month));
+		
+		long latest = lastID;
+		if (latest == -1) {
+			markup.append("001");
+		} else {
+			String lastNum = Long.toString(latest).substring(7);
+			int increment = Integer.parseInt(lastNum) + 1;
+			markup.append(String.format("%03d", increment));
+		}
+		return Long.parseLong(markup.toString());
+	}
 }
