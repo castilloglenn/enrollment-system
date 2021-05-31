@@ -79,14 +79,14 @@ public class Database {
 				+ "section_id VARCHAR(255) NOT NULL,"
 				+ "course_id VARCHAR(255) NOT NULL,"
 				+ "fname VARCHAR(255) NOT NULL,"
-				+ "mname VARCHAR(255) DEFAULT \"\","
+				+ "mname VARCHAR(255),"
 				+ "lname VARCHAR(255) NOT NULL,"
 				+ "birthday DATE NOT NULL,"
 				+ "gender VARCHAR(255) NOT NULL,"
 				+ "contact_number VARCHAR(255) NOT NULL,"
 				+ "civil_status VARCHAR(255) NOT NULL,"
 				+ "email VARCHAR(255) NOT NULL,"
-				+ "guardian VARCHAR(255) NOT NULL,"
+				+ "guardian VARCHAR(255),"
 				+ "FOREIGN KEY (section_id) "
 				+ "REFERENCES section(section_id),"
 				+ "FOREIGN KEY (course_id) "
@@ -161,7 +161,6 @@ public class Database {
 			ps.setInt(3, Integer.parseInt(data[2]));
 			
 			ps.executeUpdate();
-			subjects.add(data[0].toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -179,7 +178,6 @@ public class Database {
 			ps.setString(4, data[3].toString());
 			
 			ps.executeUpdate();
-			subjects.add(data[0].toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -195,7 +193,31 @@ public class Database {
 			ps.setString(2, data[1].toString());
 			
 			ps.executeUpdate();
-			subjects.add(data[0].toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertStudent(Object[] data) {
+		try {
+			ps = con.prepareStatement(
+				  "INSERT INTO student "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+			); // 12 values
+			ps.setLong(1, (long) data[0]);
+			ps.setString(2, data[1].toString());
+			ps.setString(3, data[2].toString());
+			ps.setString(4, data[3].toString());
+			ps.setString(5, data[4].toString());
+			ps.setString(6, data[5].toString());
+			ps.setString(7, data[6].toString());
+			ps.setString(8, data[7].toString());
+			ps.setString(9, data[8].toString());
+			ps.setString(10, data[9].toString());
+			ps.setString(11, data[10].toString());
+			ps.setString(12, data[11].toString());
+			
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -334,6 +356,35 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	public Object[] fetchStudent(long studentID) {
+		try {
+			ps = con.prepareStatement(
+				"SELECT * FROM student "
+				+ "WHERE student_id=?"			
+			);
+			ps.setLong(1, studentID);
+			ResultSet data = ps.executeQuery();
+			
+			Object[] student = new Object[12];
+			while (data.next()) {
+				student[0] = data.getLong(1);
+				student[1] = data.getString(2);
+				student[2] = data.getString(3);
+				student[3] = data.getString(4);
+				student[4] = data.getString(5);
+				student[5] = data.getString(6);
+				student[6] = data.getDate(7);
+				student[7] = data.getString(8);
+				student[8] = data.getString(9);
+				student[9] = data.getString(10);
+				student[10] = data.getString(11);
+				student[11] = data.getString(12);
+			}
+			return (student[0] == null) ? null : student;
+		} catch (SQLException e) {}
 		return null;
 	}
 }

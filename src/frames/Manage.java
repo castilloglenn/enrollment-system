@@ -5,7 +5,10 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -13,9 +16,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
@@ -26,10 +29,11 @@ import javax.swing.SwingConstants;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import main.Main;
 import util.Database;
 import util.Utility;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class Manage extends JInternalFrame {
@@ -55,7 +59,13 @@ public class Manage extends JInternalFrame {
 	private JLabel lblStudentImage;
 	private JLabel lblBirthday;
 	
+	private Database dtb;
+	private Utility util;
+	
 	public Manage(Utility util, Database dtb) {
+		this.util = util;
+		this.dtb = dtb;
+		
 		setTitle("Manage Students");
 		setClosable(true);
 		setBounds(100, 100, 450, 300);
@@ -346,7 +356,49 @@ public class Manage extends JInternalFrame {
 		});
 		btnFormAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				int selected = comboOperations.getSelectedIndex();
+				if (selected == 0) {
+					// enroll
+					if (checkFields()) {
+						try {
+							long studentID = Long.parseLong(txtFormStudentNumber.getText());
+							String courseID = comboCourse.getSelectedItem().toString();
+							String sectionID = courseID + "-"
+								+ comboYearLevel.getSelectedItem().toString()
+								+ comboSection.getSelectedItem().toString();
+							String lastName = txtLastName.getText();
+							String firstName = txtFirstName.getText();
+							String middleName = txtMi.getText();
+							DateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+							Date parsedBirthday = parser.parse(spinnerBirthday.getValue().toString());
+							DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+							String birthday = sdf.format(parsedBirthday);
+							String gender = comboFormGender.getSelectedItem().toString();
+							String contactNo = txtFormContactNumber.getText();
+							String civilStatus = comboCivilStatus.getSelectedItem().toString();
+							String email = txtFormEmailAddress.getText();
+							String guardian = txtFormGuardianName.getText();
+							
+							dtb.insertStudent(new Object[] {
+								studentID, sectionID, courseID, firstName, lastName, middleName, 
+								birthday, gender, contactNo, civilStatus, email, guardian
+							});
+							JOptionPane.showMessageDialog(null, 
+								"Student (" + lastName + ") has been enrolled!", 
+								"Success | " + Main.SYSTEM_NAME, 
+								JOptionPane.INFORMATION_MESSAGE);
+							clearFields();
+						} catch (ParseException e1) {
+							e1.printStackTrace();
+						}
+					}
+				} else if (selected == 1) {
+					// update
+					
+				} else if (selected == 2) {
+					// remove
+					
+				}
 			}
 		});
 		comboCourse.addActionListener(new ActionListener() {
@@ -355,11 +407,65 @@ public class Manage extends JInternalFrame {
 				textFormCourseName.setText(dtb.fetchCourseName(courseID));
 			}
 		});
-		spinnerBirthday.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				System.out.println(spinnerBirthday.getValue().toString());
+		txtFormStudentNumber.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				try {
+					Object[] student = dtb.fetchStudent(Long.parseLong(txtFormStudentNumber.getText()));
+					if (student != null) {
+						// To-do here
+					}
+				} catch (NumberFormatException e2) {}
 			}
 		});
 	}
 
+	private boolean checkFields() {
+		StringBuilder errors = new StringBuilder();
+		
+		if (txtLastName.getText().isBlank()) errors.append("• Last name field cannot be empty.\n");
+		if (txtFirstName.getText().isBlank()) errors.append("• First name field cannot be empty.\n");
+		if (txtFormContactNumber.getText().isBlank()) errors.append("• Contact field cannot be empty.\n");
+		if (txtFormEmailAddress.getText().isBlank()) errors.append("• Email field cannot be empty.\n");
+		
+		try {
+			DateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+			Date parsedBirthday = parser.parse(spinnerBirthday.getValue().toString());
+			Calendar now = Calendar.getInstance();
+			Calendar birthday = Calendar.getInstance();
+			birthday.setTime(parsedBirthday);
+			
+			if (now.get(Calendar.YEAR) - birthday.get(Calendar.YEAR) < 12) {
+				errors.append("• You are very young to enter college (Minimum age is atleast 12).\n");
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		if (errors.length() != 0) {
+			JOptionPane.showMessageDialog(null, 
+				"Please check the following:\n" + errors.toString(), 
+				"Invalid Fields | " + Main.SYSTEM_NAME, 
+				JOptionPane.WARNING_MESSAGE);
+			return false;
+		} else return true;
+	}
+	
+	private void clearFields() {
+		txtFormStudentNumber.setText(Long.toString(util.generateStudentID()));
+		txtLastName.setText("");
+		txtFirstName.setText("");
+		txtMi.setText("");
+		txtFormContactNumber.setText("");
+		txtFormEmailAddress.setText("");
+		txtFormGuardianName.setText("");
+		spinnerBirthday.setModel(new SpinnerDateModel(new Date(946656000000L), new Date(-2196835200000L), new Date(1621612800000L), Calendar.DAY_OF_YEAR));
+		SimpleDateFormat model = new SimpleDateFormat("MM/dd/yyyy");
+		spinnerBirthday.setEditor(new JSpinner.DateEditor(spinnerBirthday, model.toPattern()));
+		comboCivilStatus.setSelectedIndex(0);
+		comboFormGender.setSelectedIndex(0);
+		comboYearLevel.setSelectedIndex(0);
+		comboCourse.setSelectedIndex(0);
+		comboSection.setSelectedIndex(0);
+	}
 }

@@ -34,7 +34,7 @@ import frames.Masterlist;
 @SuppressWarnings("serial")
 public class Main extends JFrame {
 	
-	public static final String SYSTEM_NAME = "Cavite State University Integrated Enrollment System";
+	public static final String SYSTEM_NAME = "Cavite State University Enrollment System";
 
 	private JPanel contentPane, menuPanel, displayPanel;
 	private JButton btnDashboard, btnCourseList, btnViewSection, btnManageStudents, btnStudentMasterList, btnLogout;
