@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -59,13 +58,10 @@ public class Manage extends JInternalFrame {
 	private JLabel lblStudentImage;
 	private JLabel lblBirthday;
 	
-	private Database dtb;
 	private Utility util;
 	
 	public Manage(Utility util, Database dtb) {
 		this.util = util;
-		this.dtb = dtb;
-		
 		setTitle("Manage Students");
 		setClosable(true);
 		setBounds(100, 100, 450, 300);
@@ -305,9 +301,11 @@ public class Manage extends JInternalFrame {
 				int selected = comboOperations.getSelectedIndex();
 				if (selected == 0) {
 					// enroll
-					txtFormStudentNumber.setText(Long.toString(util.generateStudentID()));
+					clearFields(true);
 					txtFormStudentNumber.setEditable(false);
+					txtFormStudentNumber.setFocusable(false);
 					txtLastName.setEditable(true);
+					txtLastName.requestFocus();
 					txtFirstName.setEditable(true);
 					txtMi.setEditable(true);
 					txtFormContactNumber.setEditable(true);
@@ -321,8 +319,10 @@ public class Manage extends JInternalFrame {
 					comboSection.setEnabled(true);
 				} else if (selected == 1) {
 					// update
+					clearFields(false);
 					txtFormStudentNumber.setText("");
 					txtFormStudentNumber.setEditable(true);
+					txtFormStudentNumber.setFocusable(true);
 					txtLastName.setEditable(false);
 					txtFirstName.setEditable(false);
 					txtMi.setEditable(false);
@@ -337,8 +337,10 @@ public class Manage extends JInternalFrame {
 					comboSection.setEnabled(false);
 				} else if (selected == 2) {
 					// remove
+					clearFields(false);
 					txtFormStudentNumber.setText("");
 					txtFormStudentNumber.setEditable(true);
+					txtFormStudentNumber.setFocusable(true);
 					txtLastName.setEditable(false);
 					txtFirstName.setEditable(false);
 					txtMi.setEditable(false);
@@ -356,48 +358,72 @@ public class Manage extends JInternalFrame {
 		});
 		btnFormAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int selected = comboOperations.getSelectedIndex();
-				if (selected == 0) {
-					// enroll
-					if (checkFields()) {
-						try {
-							long studentID = Long.parseLong(txtFormStudentNumber.getText());
-							String courseID = comboCourse.getSelectedItem().toString();
-							String sectionID = courseID + "-"
-								+ comboYearLevel.getSelectedItem().toString()
-								+ comboSection.getSelectedItem().toString();
-							String lastName = txtLastName.getText();
-							String firstName = txtFirstName.getText();
-							String middleName = txtMi.getText();
-							DateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
-							Date parsedBirthday = parser.parse(spinnerBirthday.getValue().toString());
-							DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-							String birthday = sdf.format(parsedBirthday);
-							String gender = comboFormGender.getSelectedItem().toString();
-							String contactNo = txtFormContactNumber.getText();
-							String civilStatus = comboCivilStatus.getSelectedItem().toString();
-							String email = txtFormEmailAddress.getText();
-							String guardian = txtFormGuardianName.getText();
-							
+				try {
+					int selected = comboOperations.getSelectedIndex();
+					long studentID = Long.parseLong(txtFormStudentNumber.getText());
+					String courseID = comboCourse.getSelectedItem().toString();
+					String sectionID = courseID + "-"
+						+ comboYearLevel.getSelectedItem().toString()
+						+ comboSection.getSelectedItem().toString();
+					String lastName = txtLastName.getText();
+					String firstName = txtFirstName.getText();
+					String middleName = txtMi.getText();
+					DateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+					Date parsedBirthday = parser.parse(spinnerBirthday.getValue().toString());
+					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String birthday = sdf.format(parsedBirthday);
+					String gender = comboFormGender.getSelectedItem().toString();
+					String contactNo = txtFormContactNumber.getText();
+					String civilStatus = comboCivilStatus.getSelectedItem().toString();
+					String email = txtFormEmailAddress.getText();
+					String guardian = txtFormGuardianName.getText();
+					
+					if (selected == 0) {
+						// enroll
+						if (checkFields()) {
 							dtb.insertStudent(new Object[] {
-								studentID, sectionID, courseID, firstName, lastName, middleName, 
+								studentID, sectionID, courseID, firstName, middleName, lastName,
 								birthday, gender, contactNo, civilStatus, email, guardian
 							});
 							JOptionPane.showMessageDialog(null, 
 								"Student (" + lastName + ") has been enrolled!", 
 								"Success | " + Main.SYSTEM_NAME, 
 								JOptionPane.INFORMATION_MESSAGE);
-							clearFields();
-						} catch (ParseException e1) {
-							e1.printStackTrace();
+							clearFields(true);
+						}
+					} else if (selected == 1) {
+						// update
+						if (checkFields()) {
+							dtb.updateStudent(new Object[] {
+								studentID, sectionID, courseID, firstName, middleName, lastName,
+								birthday, gender, contactNo, civilStatus, email, guardian
+							});
+							JOptionPane.showMessageDialog(null, 
+								"Student (" + lastName + ")'s information has been updated!", 
+								"Success | " + Main.SYSTEM_NAME, 
+								JOptionPane.INFORMATION_MESSAGE);
+							clearFields(false);
+							txtFormStudentNumber.setText("");
+						}
+					} else if (selected == 2) {
+						// remove
+						int confirmation = JOptionPane.showConfirmDialog(null, 
+							"This process is irreversible, are you sure you want to delete student (" + lastName + ")?",
+							"Confirmation | " + Main.SYSTEM_NAME, JOptionPane.YES_NO_OPTION, 
+							JOptionPane.WARNING_MESSAGE);
+						if (confirmation == JOptionPane.YES_OPTION) {
+							if (dtb.deleteStudent(studentID)) {
+								JOptionPane.showMessageDialog(null, 
+									"Student (" + lastName + ") has been deleted from the database.", 
+									"Success | " + Main.SYSTEM_NAME, 
+									JOptionPane.INFORMATION_MESSAGE);
+								clearFields(false);
+								txtFormStudentNumber.setText("");
+							}
 						}
 					}
-				} else if (selected == 1) {
-					// update
-					
-				} else if (selected == 2) {
-					// remove
-					
+				} catch (ParseException e2) {
+					e2.printStackTrace();
 				}
 			}
 		});
@@ -410,12 +436,58 @@ public class Manage extends JInternalFrame {
 		txtFormStudentNumber.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+				if (e.getExtendedKeyCode() > 0)
+					getStudentDetails();
+			}
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getExtendedKeyCode() > 0)
+					getStudentDetails();
+			}
+			
+			public void getStudentDetails() {
 				try {
 					Object[] student = dtb.fetchStudent(Long.parseLong(txtFormStudentNumber.getText()));
 					if (student != null) {
-						// To-do here
-					}
-				} catch (NumberFormatException e2) {}
+						txtLastName.setText(student[5].toString());
+						txtFirstName.setText(student[3].toString());
+						txtMi.setText(student[4].toString());
+						txtFormContactNumber.setText(student[8].toString());
+						txtFormEmailAddress.setText(student[10].toString());
+						txtFormGuardianName.setText(student[11].toString());
+						comboCivilStatus.setSelectedItem(student[9]);
+						comboFormGender.setSelectedItem(student[7]);
+						
+						Date birthday =new SimpleDateFormat("yyyy-MM-dd").parse(student[6].toString());
+						spinnerBirthday.setModel(new SpinnerDateModel(birthday, new Date(-2196835200000L), new Date(1621612800000L), Calendar.DAY_OF_YEAR));
+						SimpleDateFormat model = new SimpleDateFormat("MM/dd/yyyy");
+						spinnerBirthday.setEditor(new JSpinner.DateEditor(spinnerBirthday, model.toPattern()));
+						
+						String section = student[1].toString();
+						comboCourse.setSelectedItem(section.substring(0, 4));
+						comboYearLevel.setSelectedItem(section.substring(5, 6));
+						comboSection.setSelectedItem(section.substring(6));
+						
+						// opening fields
+						if (comboOperations.getSelectedIndex() != 2) {
+							txtLastName.setEditable(true);
+							txtFirstName.setEditable(true);
+							txtMi.setEditable(true);
+							txtFormContactNumber.setEditable(true);
+							txtFormEmailAddress.setEditable(true);
+							txtFormGuardianName.setEditable(true);
+							spinnerBirthday.setEnabled(true);
+							comboCivilStatus.setEnabled(true);
+							comboFormGender.setEnabled(true);
+							comboYearLevel.setEnabled(true);
+							comboCourse.setEnabled(true);
+							comboSection.setEnabled(true);
+						}
+					} else throw new Exception();
+				} catch (Exception e2) {
+					clearFields(false);
+				}
 			}
 		});
 	}
@@ -451,8 +523,8 @@ public class Manage extends JInternalFrame {
 		} else return true;
 	}
 	
-	private void clearFields() {
-		txtFormStudentNumber.setText(Long.toString(util.generateStudentID()));
+	private void clearFields(boolean setID) {
+		if (setID) txtFormStudentNumber.setText(Long.toString(util.generateStudentID()));
 		txtLastName.setText("");
 		txtFirstName.setText("");
 		txtMi.setText("");
@@ -467,5 +539,20 @@ public class Manage extends JInternalFrame {
 		comboYearLevel.setSelectedIndex(0);
 		comboCourse.setSelectedIndex(0);
 		comboSection.setSelectedIndex(0);
+		
+		if (!setID) {
+			txtLastName.setEditable(false);
+			txtFirstName.setEditable(false);
+			txtMi.setEditable(false);
+			txtFormContactNumber.setEditable(false);
+			txtFormEmailAddress.setEditable(false);
+			txtFormGuardianName.setEditable(false);
+			spinnerBirthday.setEnabled(false);
+			comboCivilStatus.setEnabled(false);
+			comboFormGender.setEnabled(false);
+			comboYearLevel.setEnabled(false);
+			comboCourse.setEnabled(false);
+			comboSection.setEnabled(false);
+		}
 	}
 }

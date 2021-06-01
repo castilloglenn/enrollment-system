@@ -223,6 +223,58 @@ public class Database {
 		}
 	}
 	
+	public void updateStudent(Object[] data) {
+		try {
+			ps = con.prepareStatement(
+				  "UPDATE student SET "
+				  + "section_id=?, "
+				  + "course_id=?, "
+				  + "fname=?, "
+				  + "mname=?, "
+				  + "lname=?, "
+				  + "birthday=?, "
+				  + "gender=?, "
+				  + "contact_number=?, "
+				  + "civil_status=?, "
+				  + "email=?, "
+				  + "guardian=? "
+				  + "WHERE student_id=?;"
+			); // 12 values
+			
+			ps.setString(1, data[1].toString());
+			ps.setString(2, data[2].toString());
+			ps.setString(3, data[3].toString());
+			ps.setString(4, data[4].toString());
+			ps.setString(5, data[5].toString());
+			ps.setString(6, data[6].toString());
+			ps.setString(7, data[7].toString());
+			ps.setString(8, data[8].toString());
+			ps.setString(9, data[9].toString());
+			ps.setString(10, data[10].toString());
+			ps.setString(11, data[11].toString());
+			ps.setLong(12, (long) data[0]);
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean deleteStudent(long studentID) {
+		try {
+			ps = con.prepareStatement(
+				"DELETE FROM student "
+				+ "WHERE student_id=?;"
+			);
+			ps.setLong(1, studentID);
+			if (ps.executeUpdate() == 1)
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public boolean dataExistenceCheck() {
 		try {
 			ps = con.prepareStatement(
