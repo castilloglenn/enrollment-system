@@ -153,7 +153,7 @@ public class Masterlist extends JInternalFrame {
 		btnPrint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tblStudentList.getSelectedRow() != -1) 
-					regform = new RegForm(students[tblStudentList.getSelectedRow()]);
+					regform = new RegForm(students[tblStudentList.getSelectedRow()], dtb);
 				else regform = new RegForm();
 				txtRegForm.setText(regform.get());
 				tabbedPane.setSelectedIndex(1);
