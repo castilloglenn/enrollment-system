@@ -16,11 +16,16 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import java.awt.Insets;
+import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import util.Database;
 import util.Utility;
-import java.awt.Insets;
-import javax.swing.SwingConstants;
+import util.RegForm;
 
 
 @SuppressWarnings("serial")
@@ -33,9 +38,11 @@ public class Masterlist extends JInternalFrame {
 		"Student Number", "Last Name", "First Name", "Middle Initial", "Course", "Year", "Section"
 	};
 	private Object[][] students;
+	private RegForm regform;
 	
 	public Masterlist(Utility util, Database dtb) {
-		students = dtb.fetchStudents();
+		students = dtb.fetchStudents("");
+		regform = new RegForm();
 		
 		setBorder(null);
 		setTitle("Student Masterlist");
@@ -61,8 +68,8 @@ public class Masterlist extends JInternalFrame {
 		JLabel lblSearch = new JLabel("Search");
 		lblSearch.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSearch.setForeground(Color.WHITE);
-		lblSearch.setFont(new Font("Arial", Font.BOLD, 17));
-		lblSearch.setBounds(10, 11, 63, 35);
+		lblSearch.setFont(new Font("Arial", Font.BOLD, 18));
+		lblSearch.setBounds(10, 13, 71, 33);
 		panel.add(lblSearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -105,18 +112,51 @@ public class Masterlist extends JInternalFrame {
 		panelRegForm.setLayout(null);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 10, 908, 480);
+		scrollPane_1.setBounds(10, 10, 934, 491);
 		panelRegForm.add(scrollPane_1);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		scrollPane_1.setViewportView(textArea);
+		JTextArea txtRegForm = new JTextArea(regform.get());
+		txtRegForm.setFont(new Font("Courier New", Font.PLAIN, 14));
+		txtRegForm.setMargin(new Insets(20, 20, 20, 20));
+		txtRegForm.setEditable(false);
+		scrollPane_1.setViewportView(txtRegForm);
 		
 
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
 				dispose();
+			}
+		});
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getExtendedKeyCode() == 10) btnSubmit.doClick();
+			}
+		});
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				students = dtb.fetchStudents(textField.getText());
+				tblStudentList.setModel(util.generateTable(util.setupStudentInformation(students), COLUMNS));
+				util.tableCenter(tblStudentList);
+			}
+		});
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				students = dtb.fetchStudents("");
+				tblStudentList.setModel(util.generateTable(util.setupStudentInformation(students), COLUMNS));
+				util.tableCenter(tblStudentList);
+				regform = new RegForm();
+				txtRegForm.setText(regform.get());
+			}
+		});
+		btnPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tblStudentList.getSelectedRow() != -1) 
+					regform = new RegForm(students[tblStudentList.getSelectedRow()]);
+				else regform = new RegForm();
+				txtRegForm.setText(regform.get());
+				tabbedPane.setSelectedIndex(1);
 			}
 		});
 	}

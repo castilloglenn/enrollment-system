@@ -533,17 +533,42 @@ public class Database {
 	}
 
 	
-	public Object[][] fetchStudents() {
+	public Object[][] fetchStudents(String code) {
 		try {
 			ps = con.prepareStatement(
-				"SELECT COUNT(*) FROM student;"
+				"SELECT COUNT(*) "
+				+ "FROM student "
+				+ "WHERE student_id LIKE '%"+code+"%' "
+				+ "OR section_id LIKE '%"+code+"%' "
+				+ "OR course_id LIKE '%"+code+"%' "
+				+ "OR fname LIKE '%"+code+"%' "
+				+ "OR mname LIKE '%"+code+"%' "
+				+ "OR lname LIKE '%"+code+"%' "
+				+ "OR birthday LIKE '%"+code+"%' "
+				+ "OR gender LIKE '%"+code+"%' "
+				+ "OR contact_number LIKE '%"+code+"%' "
+				+ "OR civil_status LIKE '%"+code+"%' "
+				+ "OR email LIKE '%"+code+"%' "
+				+ "OR guardian LIKE '%"+code+"%';"
 			);
 			ResultSet result = ps.executeQuery();
 			result.next();
 			int size = result.getInt(1);
 
 			ps = con.prepareStatement(
-				"SELECT * FROM student;"
+				"SELECT * FROM student "
+				+ "WHERE student_id LIKE '%"+code+"%' "
+				+ "OR section_id LIKE '%"+code+"%' "
+				+ "OR course_id LIKE '%"+code+"%' "
+				+ "OR fname LIKE '%"+code+"%' "
+				+ "OR mname LIKE '%"+code+"%' "
+				+ "OR lname LIKE '%"+code+"%' "
+				+ "OR birthday LIKE '%"+code+"%' "
+				+ "OR gender LIKE '%"+code+"%' "
+				+ "OR contact_number LIKE '%"+code+"%' "
+				+ "OR civil_status LIKE '%"+code+"%' "
+				+ "OR email LIKE '%"+code+"%' "
+				+ "OR guardian LIKE '%"+code+"%';"
 			);
 			ResultSet result2 = ps.executeQuery();
 			
@@ -560,9 +585,7 @@ public class Database {
 				}
 				return data;
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 		return null;
 	}
 }
