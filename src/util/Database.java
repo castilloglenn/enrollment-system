@@ -439,4 +439,55 @@ public class Database {
 		} catch (SQLException e) {}
 		return null;
 	}
+	
+	public int fetchDataQueryCount(String table, String column, String query) {
+		try {
+			ResultSet fetchCount = stmt.executeQuery(
+				  "SELECT COUNT(" + column + ") "
+				+ "FROM " + table + " "
+				+ "WHERE " + column + " "
+				+ "LIKE \"%" + query + "%\";"
+			);
+			fetchCount.next();
+			return fetchCount.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public Object[][] fetchDataQuery(String table, String column, String query) {
+		try {
+			int size = fetchDataQueryCount(table, column, query);
+			if (size != 0) {
+				Object[][] data = new Object[size][12];
+				ResultSet fetchData = stmt.executeQuery(
+					  "SELECT * "
+					+ "FROM " + table + " "
+					+ "WHERE " + column + " "
+					+ "LIKE \"%" + query + "%\" "
+				);
+				
+				int index = 0;
+				while (fetchData.next()) {
+					Object[] row = new Object[11];
+					
+					for (int index2 = 0; index2 < row.length; index2++) {
+						try {
+							row[index2] = fetchData.getObject(index2 + 1);
+						} catch (SQLException e) {
+							break;
+						}
+					}
+					
+					data[index] = row;
+					index++;
+				}
+				return data;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

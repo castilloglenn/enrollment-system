@@ -69,6 +69,7 @@ public class Sections extends JInternalFrame {
 		tblCreateSection.setBorder(new LineBorder(new Color(0, 0, 0), 3, true));
 		tblCreateSection.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null, null},
 			},
 			new String[] {
 				"Subject Code", "Subject Name", "Units", "Time", "Day"
@@ -77,6 +78,7 @@ public class Sections extends JInternalFrame {
 		tblCreateSection.getColumnModel().getColumn(0).setResizable(false);
 		tblCreateSection.getColumnModel().getColumn(1).setResizable(false);
 		tblCreateSection.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tblCreateSection.getColumnModel().getColumn(1).setMinWidth(125);
 		tblCreateSection.getColumnModel().getColumn(2).setResizable(false);
 		tblCreateSection.getColumnModel().getColumn(2).setPreferredWidth(25);
 		tblCreateSection.getColumnModel().getColumn(3).setResizable(false);
