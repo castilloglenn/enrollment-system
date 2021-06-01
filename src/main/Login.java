@@ -117,7 +117,7 @@ public class Login extends JFrame {
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnLogin.setBackground(new Color(211, 211, 211));
+		btnLogin.setBackground(Color.WHITE);
 		Image loginIcon = new ImageIcon("images\\lg.png").getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 		ImageIcon loginIconScaled = new ImageIcon(loginIcon);
 		btnLogin.setIcon(loginIconScaled);

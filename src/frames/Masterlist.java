@@ -27,14 +27,14 @@ public class Masterlist extends JInternalFrame {
 	private JTable tblStudentList;
 	
 	public Masterlist(Database dtb) {
+		setBorder(null);
 		setTitle("Student Masterlist");
 		setClosable(true);
-		setBounds(100, 100, 450, 300);
-		setSize(949,558);
 		getContentPane().setLayout(null);
+		setBounds(0, 0, 954, 558);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 933, 528);
+		tabbedPane.setBounds(0, 0, 964, 558);
 		getContentPane().add(tabbedPane);
 		
 		JPanel panel = new JPanel();
@@ -55,10 +55,12 @@ public class Masterlist extends JInternalFrame {
 		panel.add(lblSearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 54, 908, 435);
+		scrollPane.getViewport().setBackground(new Color(53, 134, 0));
+		scrollPane.setBounds(10, 54, 927, 444);
 		panel.add(scrollPane);
 		
 		tblStudentList = new JTable();
+		tblStudentList.setFont(new Font("Arial", Font.PLAIN, 16));
 		tblStudentList.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null},
@@ -71,7 +73,9 @@ public class Masterlist extends JInternalFrame {
 				return false;
 			}
 		});
+		tblStudentList.getTableHeader().setFont(new Font("Arial", Font.PLAIN, 16));
 		tblStudentList.getColumnModel().getColumn(0).setResizable(false);
+		tblStudentList.setRowHeight(20);
 		scrollPane.setViewportView(tblStudentList);
 		
 		JButton btnPrint = new JButton("Print Registration Form");

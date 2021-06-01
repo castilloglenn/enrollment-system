@@ -61,15 +61,16 @@ public class Manage extends JInternalFrame {
 	private Utility util;
 	
 	public Manage(Utility util, Database dtb) {
+		setBorder(null);
 		this.util = util;
+		
 		setTitle("Manage Students");
 		setClosable(true);
-		setBounds(100, 100, 450, 300);
-		setSize(949,558);
 		getContentPane().setLayout(null);
+		setBounds(0, 0, 954, 558);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 933, 528);
+		tabbedPane.setBounds(0, 0, 964, 558);
 		
 		getContentPane().add(tabbedPane);
 		
@@ -195,6 +196,7 @@ public class Manage extends JInternalFrame {
 		formsPanel.add(txtFormStudentNumber);
 		
 		btnFormAdd = new JButton("Confirm");
+		btnFormAdd.setBackground(Color.WHITE);
 		btnFormAdd.setFocusable(false);
 		btnFormAdd.setFont(new Font("Arial", Font.PLAIN, 16));
 		btnFormAdd.setBounds(739, 134, 173, 33);

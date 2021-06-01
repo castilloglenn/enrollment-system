@@ -10,11 +10,15 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import util.Database;
+import javax.swing.JButton;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.border.BevelBorder;
 
 
 @SuppressWarnings("serial")
@@ -22,16 +26,15 @@ public class Dashboard extends JInternalFrame {
 
 	
 	public Dashboard(Database dtb) {
+		setBorder(null);
 		setTitle("Dashboard");
 		setClosable(true);
-		
-		setBounds(100, 100, 456, 302);
-		setSize(949, 967);
 		getContentPane().setLayout(null);
+		setBounds(0, 0, 954, 558);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(53, 134, 0));
-		panel.setBounds(0, 0, 946, 719);
+		panel.setBounds(0, 0, 964, 558);
 		
 		getContentPane().add(panel);
 		panel.setLayout(null);
@@ -72,9 +75,9 @@ public class Dashboard extends JInternalFrame {
 		panel.add(lblNewLabel_1);
 		
 		JPanel totalStudentPanel = new JPanel();
-		totalStudentPanel.setBorder(new LineBorder(new Color(0, 0, 0), 3, true));
+		totalStudentPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		totalStudentPanel.setBackground(new Color(30, 144, 255));
-		totalStudentPanel.setBounds(61, 223, 233, 159);
+		totalStudentPanel.setBounds(61, 257, 233, 159);
 		panel.add(totalStudentPanel);
 		totalStudentPanel.setLayout(null);
 		
@@ -98,12 +101,11 @@ public class Dashboard extends JInternalFrame {
 		lblTotalStudentCount.setBounds(129, 30, 93, 57);
 		totalStudentPanel.add(lblTotalStudentCount);
 		
-		
 		JPanel totalCoursePanel = new JPanel();
-		totalCoursePanel.setBounds(355, 223, 233, 159);
+		totalCoursePanel.setBounds(355, 257, 233, 159);
 		panel.add(totalCoursePanel);
 		totalCoursePanel.setLayout(null);
-		totalCoursePanel.setBorder(new LineBorder(new Color(0, 0, 0), 3, true));
+		totalCoursePanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		totalCoursePanel.setBackground(new Color(30, 144, 255));
 		
 		JLabel totalCourseIcon = new JLabel("");
@@ -118,7 +120,7 @@ public class Dashboard extends JInternalFrame {
 		lblTotalCourse.setFont(new Font("Arial", Font.BOLD, 18));
 		lblTotalCourse.setBounds(112, 109, 111, 26);
 		totalCoursePanel.add(lblTotalCourse);
-		
+
 		JLabel lblTotalCourseCount = new JLabel(Integer.toString(dtb.countCourses()));
 		lblTotalCourseCount.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotalCourseCount.setForeground(new Color(255, 255, 224));
@@ -128,9 +130,9 @@ public class Dashboard extends JInternalFrame {
 		
 		JPanel totalSubjectPanel = new JPanel();
 		totalSubjectPanel.setLayout(null);
-		totalSubjectPanel.setBorder(new LineBorder(new Color(0, 0, 0), 3, true));
+		totalSubjectPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		totalSubjectPanel.setBackground(new Color(30, 144, 255));
-		totalSubjectPanel.setBounds(649, 223, 233, 159);
+		totalSubjectPanel.setBounds(649, 257, 233, 159);
 		panel.add(totalSubjectPanel);
 		
 		JLabel totalSubjectIcon = new JLabel("");
@@ -145,7 +147,7 @@ public class Dashboard extends JInternalFrame {
 		lblTotalSubjects.setFont(new Font("Arial", Font.BOLD, 18));
 		lblTotalSubjects.setBounds(99, 109, 124, 26);
 		totalSubjectPanel.add(lblTotalSubjects);
-		
+
 		JLabel lblTotalSubjectsCount = new JLabel(Integer.toString(dtb.countSubjects()));
 		lblTotalSubjectsCount.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotalSubjectsCount.setForeground(new Color(255, 255, 224));
@@ -153,6 +155,15 @@ public class Dashboard extends JInternalFrame {
 		lblTotalSubjectsCount.setBounds(130, 30, 93, 57);
 		totalSubjectPanel.add(lblTotalSubjectsCount);
 		
+		JButton btnRefresh = new JButton("Refresh Statistics");
+		btnRefresh.setFocusable(false);
+		btnRefresh.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		btnRefresh.setForeground(Color.WHITE);
+		btnRefresh.setBackground(new Color(53, 134, 0));
+		btnRefresh.setMargin(new Insets(2, 2, 2, 2));
+		btnRefresh.setFont(new Font("Arial", Font.BOLD, 16));
+		btnRefresh.setBounds(61, 178, 821, 44);
+		panel.add(btnRefresh);
 
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
@@ -160,6 +171,12 @@ public class Dashboard extends JInternalFrame {
 				dispose();
 			}
 		});
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblTotalStudentCount.setText(Integer.toString(dtb.countStudents()));
+				lblTotalCourseCount.setText(Integer.toString(dtb.countCourses()));
+				lblTotalSubjectsCount.setText(Integer.toString(dtb.countSubjects()));
+			}
+		});
 	}
-
 }

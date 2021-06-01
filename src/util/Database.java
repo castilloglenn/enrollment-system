@@ -490,4 +490,46 @@ public class Database {
 		}
 		return null;
 	}
+	
+	public Object[][] fetchSubjectSchedule(String sectionID) {
+		try {
+			ps = con.prepareStatement(
+				"SELECT COUNT(*) "
+				+ "FROM subject s, assigns a "
+				+ "WHERE s.subject_id=a.subject_id "
+				+ "AND a.section_id=?;"
+			);
+			ps.setString(1, sectionID);
+			ResultSet result = ps.executeQuery();
+			result.next();
+			int size = result.getInt(1);
+
+			ps = con.prepareStatement(
+				"SELECT s.subject_id, s.name, s.units, a.time, a.day "
+				+ "FROM subject s, assigns a "
+				+ "WHERE s.subject_id=a.subject_id "
+				+ "AND a.section_id=?;"
+			);
+			ps.setString(1, sectionID);
+			ResultSet result2 = ps.executeQuery();
+			
+			if (size != 0) {
+				Object[][] data = new Object[size][5];
+				int index = 0;
+				while (result2.next()) {
+					Object[] row = new Object[5];
+					for (int index2 = 0; index2 < row.length; index2++) {
+						row[index2] = result2.getObject(index2 + 1);
+					}
+					
+					data[index] = row;
+					index++;
+				}
+				return data;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

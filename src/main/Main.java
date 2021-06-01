@@ -46,6 +46,7 @@ public class Main extends JFrame {
 	public Main() {
 		Database dtb = new Database();
 		util = new Utility(dtb);
+
 		Sections sl = new Sections(util, dtb);
 		Courses cl = new Courses(util, dtb);
 		Dashboard db = new Dashboard(dtb);
@@ -74,10 +75,14 @@ public class Main extends JFrame {
 		
 		displayPanel = new JPanel();  				//Dito ilalabas yung ibang mga frames pag clinick mo mga buttons
 		displayPanel.setOpaque(false);
-		displayPanel.setBounds(257, 126, 949, 558);
+		displayPanel.setBounds(257, 126, 954, 558);
 		contentPane.add(displayPanel);
-		displayPanel.setLayout(new BorderLayout(0, 0));
-		
+		displayPanel.setLayout(null);
+		displayPanel.add(db);
+		displayPanel.add(cl);
+		displayPanel.add(sl);
+		displayPanel.add(as);
+		displayPanel.add(su);
 		
 		adminIcon = new JLabel("");	//Admin Icon lods
 		Image adminPicture = new ImageIcon("images\\admin.png").getImage().getScaledInstance(76, 65, Image.SCALE_SMOOTH);
@@ -94,6 +99,8 @@ public class Main extends JFrame {
 		menuPanel.add(lblWelcomeAdmin);
 		
 		btnLogout = new JButton("Sign Out");
+		btnLogout.setFocusable(false);
+		btnLogout.setBackground(Color.WHITE);
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Image logoutIcon = new ImageIcon("images\\check.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);  //Icon lang to dong
@@ -116,17 +123,16 @@ public class Main extends JFrame {
 		menuPanel.add(btnLogout);
 		
 		btnDashboard = new JButton("Dashboard");			//Dashboard button
+		btnDashboard.setFocusable(false);
+		btnDashboard.setBackground(Color.WHITE);
 		btnDashboard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {		//function ng dashboard
-				as.dispose();
-				sl.dispose();
-				cl.dispose();
-				su.dispose();
-				displayPanel.add(db);
+				as.setVisible(false);
+				sl.setVisible(false);
+				cl.setVisible(false);
+				su.setVisible(false);
 				db.setVisible(true);
 				slidingMenu();
-				
-				
 			}
 		});
 		btnDashboard.setFont(new Font("Rockwell", Font.BOLD, 16));
@@ -134,13 +140,14 @@ public class Main extends JFrame {
 		menuPanel.add(btnDashboard);
 		
 		btnCourseList = new JButton("View Courses");					//create course button
+		btnCourseList.setFocusable(false);
+		btnCourseList.setBackground(Color.WHITE);
 		btnCourseList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				//create course function
-				as.dispose();
-				db.dispose();
-				sl.dispose();
-				su.dispose();
-				displayPanel.add(cl);
+				as.setVisible(false);
+				db.setVisible(false);
+				sl.setVisible(false);
+				su.setVisible(false);
 				cl.setVisible(true);
 				slidingMenu();
 			}
@@ -150,13 +157,14 @@ public class Main extends JFrame {
 		menuPanel.add(btnCourseList);
 		
 		btnViewSection = new JButton("View Sections");
+		btnViewSection.setFocusable(false);
+		btnViewSection.setBackground(Color.WHITE);
 		btnViewSection.addActionListener(new ActionListener() {			//function ng create section
 			public void actionPerformed(ActionEvent e) {
-				as.dispose();
-				db.dispose();
-				cl.dispose();
-				su.dispose();
-				displayPanel.add(sl);
+				as.setVisible(false);
+				db.setVisible(false);
+				cl.setVisible(false);
+				su.setVisible(false);
 				sl.setVisible(true);
 				slidingMenu();	
 
@@ -167,14 +175,14 @@ public class Main extends JFrame {
 		menuPanel.add(btnViewSection);
 		
 		btnManageStudents = new JButton("Manage Students");
+		btnManageStudents.setFocusable(false);
+		btnManageStudents.setBackground(Color.WHITE);
 		btnManageStudents.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				cl.dispose();
-				db.dispose();
-				sl.dispose();
-				su.dispose();
-				displayPanel.add(as);
+				cl.setVisible(false);
+				db.setVisible(false);
+				sl.setVisible(false);
+				su.setVisible(false);
 				as.setVisible(true);
 				slidingMenu();
 								
@@ -185,14 +193,15 @@ public class Main extends JFrame {
 		menuPanel.add(btnManageStudents);
 		
 		btnStudentMasterList = new JButton("Student Masterlist");
+		btnStudentMasterList.setFocusable(false);
+		btnStudentMasterList.setBackground(Color.WHITE);
 		btnStudentMasterList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				as.dispose();
-				db.dispose();
-				cl.dispose();
-				sl.dispose();
-				displayPanel.add(su);
+				as.setVisible(false);
+				db.setVisible(false);
+				cl.setVisible(false);
+				sl.setVisible(false);
 				su.setVisible(true);
 				slidingMenu();	
 			}
@@ -220,7 +229,6 @@ public class Main extends JFrame {
 		Image menuIcon = new ImageIcon("images\\menu.png").getImage().getScaledInstance(61, 59, Image.SCALE_SMOOTH);
 		ImageIcon menuIconScaled = new ImageIcon(menuIcon);
 		menuButton.setIcon(menuIconScaled);
-		
 		
 		banner = new JLabel("");						//Banner lods
 		banner.setBounds(0, 0, 1221, 59);

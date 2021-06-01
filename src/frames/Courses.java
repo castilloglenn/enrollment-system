@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.table.DefaultTableModel;
 
 import util.Database;
 import util.Utility;
@@ -39,14 +38,16 @@ public class Courses extends JInternalFrame {
 	private final String[] COLUMNS = {"Subject Code", "Subject Name", "Units"};
 	
 	public Courses(Utility util, Database dtb) {
+
+		setTitle("View Courses");
 		setClosable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBorder(null);
-		setBounds(-5, 0, 949, 565);
 		getContentPane().setLayout(null);
+		setBounds(0, 0, 954, 558);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 949, 538);
+		tabbedPane.setBounds(0, 0, 964, 558);
 		getContentPane().add(tabbedPane);
 		
 		panelCourseList = new JPanel();
@@ -65,7 +66,7 @@ public class Courses extends JInternalFrame {
 		JComboBox<Object> comboCourseSelection = new JComboBox<>();
 		comboCourseSelection.setModel(new DefaultComboBoxModel<Object>(dtb.fetchCourseIDs()));
 		comboCourseSelection.setFont(new Font("Arial", Font.PLAIN, 16));
-		comboCourseSelection.setBounds(138, 27, 290, 29);
+		comboCourseSelection.setBounds(138, 27, 290, 32);
 		panelCourseList.add(comboCourseSelection);
 		
 		tblCourseList = new JTable();
@@ -78,6 +79,7 @@ public class Courses extends JInternalFrame {
 		util.tableCenter(tblCourseList);
 		scrollPaneCourseList.setViewportView(tblCourseList);
 		tblCourseList.getColumnModel().getColumn(1).setMinWidth(450);
+		tblCourseList.getTableHeader().setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		btnCourseListDelete = new JButton("Delete Course");
 		btnCourseListDelete.setBounds(820, 476, 114, 23);
@@ -85,13 +87,13 @@ public class Courses extends JInternalFrame {
 		
 		lblCourseCode = new JLabel("Course Code");
 		lblCourseCode.setForeground(Color.WHITE);
-		lblCourseCode.setFont(new Font("Arial", Font.BOLD, 17));
+		lblCourseCode.setFont(new Font("Arial", Font.BOLD, 16));
 		lblCourseCode.setBounds(14, 25, 114, 32);
 		panelCourseList.add(lblCourseCode);
 		
 		JLabel lblCourseName = new JLabel("Course Name");
 		lblCourseName.setForeground(Color.WHITE);
-		lblCourseName.setFont(new Font("Arial", Font.BOLD, 17));
+		lblCourseName.setFont(new Font("Arial", Font.BOLD, 16));
 		lblCourseName.setBounds(15, 68, 113, 32);
 		panelCourseList.add(lblCourseName);
 		
