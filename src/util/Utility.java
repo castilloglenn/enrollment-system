@@ -163,4 +163,23 @@ public class Utility {
 		}
 		return Long.parseLong(markup.toString());
 	}
+	
+	public Object[][] setupStudentInformation(Object[][] students) {
+		Object[][] arranged = new Object[students.length][7];
+		for (int index = 0; index < students.length; index++) {
+			Object[] row = new Object[7];
+			String course = students[index][1].toString();
+			
+			row[0] = students[index][0];
+			row[1] = students[index][5];
+			row[2] = students[index][3];
+			row[3] = students[index][4];
+			row[4] = course.substring(0, 4);
+			row[5] = course.substring(5, 6);
+			row[6] = course.substring(6);
+			
+			arranged[index] = row;
+		}
+		return arranged;
+	}
 }

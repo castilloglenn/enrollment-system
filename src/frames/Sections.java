@@ -43,10 +43,10 @@ public class Sections extends JInternalFrame {
 	private Database dtb;
 	
 	public Sections(Utility util, Database dtb) {
-		setBorder(null);
 		this.util = util;
 		this.dtb = dtb;
 
+		setBorder(null);
 		setTitle("View Sections");
 		setClosable(true);
 		getContentPane().setLayout(null);

@@ -13,11 +13,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.table.DefaultTableModel;
 
 import util.Database;
+import util.Utility;
+import java.awt.Insets;
+import javax.swing.SwingConstants;
 
 
 @SuppressWarnings("serial")
@@ -26,7 +29,14 @@ public class Masterlist extends JInternalFrame {
 	private JTextField textField;
 	private JTable tblStudentList;
 	
-	public Masterlist(Database dtb) {
+	private String[] COLUMNS = {
+		"Student Number", "Last Name", "First Name", "Middle Initial", "Course", "Year", "Section"
+	};
+	private Object[][] students;
+	
+	public Masterlist(Utility util, Database dtb) {
+		students = dtb.fetchStudents();
+		
 		setBorder(null);
 		setTitle("Student Masterlist");
 		setClosable(true);
@@ -43,15 +53,16 @@ public class Masterlist extends JInternalFrame {
 		panel.setLayout(null);
 		
 		textField = new JTextField();
-		textField.setFont(new Font("Microsoft YaHei UI Light", Font.BOLD, 16));
+		textField.setFont(new Font("Arial", Font.PLAIN, 16));
 		textField.setColumns(10);
-		textField.setBounds(83, 11, 389, 32);
+		textField.setBounds(83, 11, 389, 35);
 		panel.add(textField);
 		
 		JLabel lblSearch = new JLabel("Search");
+		lblSearch.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSearch.setForeground(Color.WHITE);
 		lblSearch.setFont(new Font("Arial", Font.BOLD, 17));
-		lblSearch.setBounds(10, 11, 63, 32);
+		lblSearch.setBounds(10, 11, 63, 35);
 		panel.add(lblSearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -60,28 +71,33 @@ public class Masterlist extends JInternalFrame {
 		panel.add(scrollPane);
 		
 		tblStudentList = new JTable();
+		tblStudentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblStudentList.setFont(new Font("Arial", Font.PLAIN, 16));
-		tblStudentList.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"Student Number", "Last Name", "First Name", "Middle Initial", "Course", "Year", "Section"
-			}
-		) {
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		});
+		tblStudentList.setModel(util.generateTable(util.setupStudentInformation(students), COLUMNS));
+		util.tableCenter(tblStudentList);
 		tblStudentList.getTableHeader().setFont(new Font("Arial", Font.PLAIN, 16));
-		tblStudentList.getColumnModel().getColumn(0).setResizable(false);
 		tblStudentList.setRowHeight(20);
 		scrollPane.setViewportView(tblStudentList);
 		
+		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setMargin(new Insets(2, 5, 2, 5));
+		btnSubmit.setBackground(Color.WHITE);
+		btnSubmit.setFont(new Font("Arial", Font.PLAIN, 16));
+		btnSubmit.setBounds(482, 11, 110, 35);
+		panel.add(btnSubmit);
+		
 		JButton btnPrint = new JButton("Print Registration Form");
-		btnPrint.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnPrint.setBounds(482, 11, 173, 35);
+		btnPrint.setFont(new Font("Arial", Font.PLAIN, 16));
+		btnPrint.setBackground(Color.WHITE);
+		btnPrint.setBounds(720, 11, 217, 35);
 		panel.add(btnPrint);
+		
+		JButton btnRefresh = new JButton("Refresh List");
+		btnRefresh.setMargin(new Insets(2, 5, 2, 5));
+		btnRefresh.setFont(new Font("Arial", Font.PLAIN, 16));
+		btnRefresh.setBackground(Color.WHITE);
+		btnRefresh.setBounds(598, 11, 116, 35);
+		panel.add(btnRefresh);
 		
 		JPanel panelRegForm = new JPanel();
 		panelRegForm.setBackground(new Color(53, 134, 0));
@@ -104,5 +120,4 @@ public class Masterlist extends JInternalFrame {
 			}
 		});
 	}
-
 }

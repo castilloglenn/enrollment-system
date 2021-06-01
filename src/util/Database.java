@@ -521,7 +521,40 @@ public class Database {
 					for (int index2 = 0; index2 < row.length; index2++) {
 						row[index2] = result2.getObject(index2 + 1);
 					}
-					
+					data[index] = row;
+					index++;
+				}
+				return data;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
+	public Object[][] fetchStudents() {
+		try {
+			ps = con.prepareStatement(
+				"SELECT COUNT(*) FROM student;"
+			);
+			ResultSet result = ps.executeQuery();
+			result.next();
+			int size = result.getInt(1);
+
+			ps = con.prepareStatement(
+				"SELECT * FROM student;"
+			);
+			ResultSet result2 = ps.executeQuery();
+			
+			if (size != 0) {
+				Object[][] data = new Object[size][12];
+				int index = 0;
+				while (result2.next()) {
+					Object[] row = new Object[12];
+					for (int index2 = 0; index2 < row.length; index2++) {
+						row[index2] = result2.getObject(index2 + 1);
+					}
 					data[index] = row;
 					index++;
 				}

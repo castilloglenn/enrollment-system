@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.BorderLayout;
 
 import util.Utility;
 import util.Database;
@@ -51,7 +50,7 @@ public class Main extends JFrame {
 		Courses cl = new Courses(util, dtb);
 		Dashboard db = new Dashboard(dtb);
 		Manage as = new Manage(util, dtb);
-		Masterlist su = new Masterlist(dtb);
+		Masterlist su = new Masterlist(util, dtb);
 		
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
