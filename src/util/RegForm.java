@@ -520,7 +520,7 @@ public class RegForm {
 			form.append(BR + BR + BR + BR + BR + BR + BR);
 			form.append(horizontalLine + BR);
 			form.append(center("") + BR);
-			form.append(center("Please select a row in the student's masterlist table and press \"View Registration Form\" to continue.") + BR);
+			form.append(center("Please select a row in the student's masterlist table and press \"Show Registration Form\" to continue.") + BR);
 			form.append(center("") + BR);
 			form.append(horizontalLine + BR);
 			
