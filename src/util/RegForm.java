@@ -565,6 +565,9 @@ public class RegForm {
 			form.append(tuitionHeader());
 			form.append(tuitionRows());
 			form.append(center(tableHorizontalLine) + BR);
+			form.append(justify(encryptSpaces("Official Copy") + " " 
+				+ encryptSpaces("Cavite State University | Imus Campus")
+			) + BR);
 	    	
 	    	form.append(center("") + BR);
 	    	form.append(horizontalLine + BR);
