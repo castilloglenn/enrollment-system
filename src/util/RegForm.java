@@ -264,6 +264,10 @@ public class RegForm {
 		rows.append(scheduleEmptyRows());
 		tuition = totalUnits * perUnit;
 		
+		totalAmount += tuition + library + medical + publication + 
+			registration + guidance + sfdf + srf + athletic +
+			scuaa + internet + ccl;
+		
 		return rows.toString();
 	}
 	
@@ -365,7 +369,7 @@ public class RegForm {
 		rows.append("|");
 		rows.append(justify(encryptSpaces("Medical:") + String.format(" %,.2f", (float) medical), LONGER));
 		rows.append("|");
-		rows.append(justify(encryptSpaces("Total Amount:") + String.format(" %,.2f", (float) tuition), LONGER));
+		rows.append(justify(encryptSpaces("Total Amount:") + String.format(" %,.2f", (float) totalAmount), LONGER));
 		rows.append("|  |" + BR);
 		
 		// LINE #4
@@ -418,7 +422,7 @@ public class RegForm {
 		rows.append("|");
 		rows.append(center("", SHORTER));
 		rows.append("|");
-		rows.append(justify(encryptSpaces("Athletic:") + String.format(" %,.2f", (float) athletic), LONGER));
+		rows.append(justify(encryptSpaces("SRF:") + String.format(" %,.2f", (float) srf), LONGER));
 		rows.append("|");
 		rows.append(justify(encryptSpaces("SFDF:") + " 0", LONGER));
 		rows.append("|  |" + BR);
@@ -429,7 +433,7 @@ public class RegForm {
 		rows.append("|");
 		rows.append(center("", SHORTER));
 		rows.append("|");
-		rows.append(justify(encryptSpaces("SCUAA:") + String.format(" %,.2f", (float) scuaa), LONGER));
+		rows.append(justify(encryptSpaces("Athletic:") + String.format(" %,.2f", (float) athletic), LONGER));
 		rows.append("|");
 		rows.append(justify(encryptSpaces("SRF:") + " 0", LONGER));
 		rows.append("|  |" + BR);
@@ -440,7 +444,7 @@ public class RegForm {
 		rows.append("|");
 		rows.append(center("", SHORTER));
 		rows.append("|");
-		rows.append(center("", LONGER));
+		rows.append(justify(encryptSpaces("SCUAA:") + String.format(" %,.2f", (float) scuaa), LONGER));
 		rows.append("|");
 		rows.append(center("", LONGER));
 		rows.append("|  |" + BR);
@@ -464,7 +468,7 @@ public class RegForm {
 		rows.append("|");
 		rows.append(center("", LONGER));
 		rows.append("|");
-		rows.append(justify(String.format("First: %,.2f", (float) tuition / 2.0), LONGER));
+		rows.append(justify(String.format("First: %,.2f", (float) totalAmount / 2.0), LONGER));
 		rows.append("|  |" + BR);
 		
 		// LINE #13
@@ -475,7 +479,7 @@ public class RegForm {
 		rows.append("|");
 		rows.append(center("", LONGER));
 		rows.append("|");
-		rows.append(justify(String.format("Second: %,.2f", (float) tuition / 4.0), LONGER));
+		rows.append(justify(String.format("Second: %,.2f", (float) totalAmount / 4.0), LONGER));
 		rows.append("|  |" + BR);
 		
 		// LINE #14
@@ -486,7 +490,7 @@ public class RegForm {
 		rows.append("|");
 		rows.append(center("", LONGER));
 		rows.append("|");
-		rows.append(justify(String.format("Third: %,.2f", (float) tuition / 4.0), LONGER));
+		rows.append(justify(String.format("Third: %,.2f", (float) totalAmount / 4.0), LONGER));
 		rows.append("|  |" + BR);
 		
 		rows.append(tuitionEmptyRow());
