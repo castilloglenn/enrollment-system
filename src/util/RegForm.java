@@ -207,7 +207,7 @@ public class RegForm {
 	public String encryptSpaces(String message) {
 		String newMessage = "";
 		for (int index = 0; index < message.length(); index++) {
-			if (message.charAt(index) == ' ') newMessage += "•";
+			if (message.charAt(index) == ' ') newMessage += "*";
 			else newMessage += message.charAt(index);
 		}
 		return newMessage;
@@ -216,7 +216,7 @@ public class RegForm {
 	public String decryptBullets(String message) {
 		String newMessage = "";
 		for (int index = 0; index < message.length(); index++) {
-			if (message.charAt(index) == '•') newMessage += " ";
+			if (message.charAt(index) == '*') newMessage += " ";
 			else newMessage += message.charAt(index);
 		}
 		return newMessage;
