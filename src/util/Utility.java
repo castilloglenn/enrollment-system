@@ -27,7 +27,7 @@ public class Utility {
 	private Random rand = new Random();
 	public String[] yearLevels = {"1", "2", "3", "4"};
 	public String[] sections = {"A", "B", "C", "D"};
-	private String[] schedules = {"8AM", "9AM", "10AM", "11AM", "12PM", 
+	public String[] schedules = {"8AM", "9AM", "10AM", "11AM", "12PM", 
 		"1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM"};
 	private String[] days = {"M", "T", "W", "TH", "F", "S"};
 	int maximumHours = 3;
