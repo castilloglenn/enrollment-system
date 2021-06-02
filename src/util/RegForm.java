@@ -579,4 +579,5 @@ public class RegForm {
     	return form.toString();
     }
 	
+	public Object[] getStudent() {return student;}
 }

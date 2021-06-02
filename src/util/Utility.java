@@ -1,5 +1,7 @@
 package util;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Random;
@@ -76,6 +78,17 @@ public class Utility {
     			}
 	        } else parseXML(node.item(index).getChildNodes());
 		}
+	}
+	
+	public void writeFile(String title, String message) {
+		File f = new File("./public/" + title + ".txt");
+        try {
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(message.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	private void generateData() {
