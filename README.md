@@ -1,4 +1,4 @@
-# PulseBytes Merchandise E-Commerce Website
+# Cavite State University Enrollment System
 Final project for the subject DCIT 24C Information Management - Laboratory
 
 Login<br />
