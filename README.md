@@ -1,5 +1,5 @@
 # Cavite State University Enrollment System
-Final project for the subject DCIT 24C Information Management - Laboratory
+Final project for the subject DCIT 24C Information Management - Laboratory, Basic enrollment system with minimal functionality but with randomization algorithms in the backend to generate automated schedules and courses, also gets data from an XML file, and generates dynamic student registration form that adapts to the maximum width of a certain paper for printing in a dot matrix printer which is used by most universities. Created using Java, XML and MySQL.
 
 Login<br />
 ![Login](https://user-images.githubusercontent.com/55197203/120894083-3a6bfd00-c649-11eb-8065-2a96f0ff7df1.JPG)
