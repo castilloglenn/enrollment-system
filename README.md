@@ -1,3 +1,5 @@
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fcastilloglenn%2Fenrollment-system&count_bg=%23068BEB&title_bg=%23555555&icon=myspace.svg&icon_color=%23E7E7E7&title=Visits&edge_flat=false)](https://hits.seeyoufarm.com)
+
 # Cavite State University Enrollment System
 Final project for the subject DCIT 24C Information Management - Laboratory, Basic enrollment system with minimal functionality but with randomization algorithms in the backend to generate automated schedules and courses, also gets data from an XML file, and generates dynamic student registration form that adapts to the maximum width of a certain paper for printing in a dot matrix printer which is used by most universities. Created using Java, XML and MySQL.
 
